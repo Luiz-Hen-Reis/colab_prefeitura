@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import com.henr.colab_prefeitura.modules.users.enums.Role;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,12 +36,14 @@ public class User {
     private String name;
 
     @Column(unique = true, nullable = false)
+    @Email(message = "Providencie um e-mail válido.")
     private String email;
 
     @Column(unique = true, nullable = false)
     private String CPF;
 
     @Column(nullable = false)
+    @Length(min = 6, message = "A senha precisa ter no mínimo 6 caractéres")
     private String password;
 
     @Enumerated(EnumType.STRING)
