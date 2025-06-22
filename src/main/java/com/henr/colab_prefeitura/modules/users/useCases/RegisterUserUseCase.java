@@ -10,6 +10,7 @@ import com.henr.colab_prefeitura.exceptions.UserFoundException;
 import com.henr.colab_prefeitura.modules.users.dtos.RegisterUserRequestDTO;
 import com.henr.colab_prefeitura.modules.users.dtos.RegisterUserResponseDTO;
 import com.henr.colab_prefeitura.modules.users.entities.User;
+import com.henr.colab_prefeitura.modules.users.enums.Role;
 import com.henr.colab_prefeitura.modules.users.repositories.UserRepository;
 import com.henr.colab_prefeitura.providers.JWTUtil;
 
@@ -40,6 +41,7 @@ public class RegisterUserUseCase {
                             .email(dto.email())
                             .CPF(dto.CPF())
                             .password(hashedPassword)
+                            .role(Role.USER)
                             .build();
 
         User savedUser = this.userRepository.save(newUser);
