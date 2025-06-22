@@ -36,15 +36,12 @@ public class User {
     private String name;
 
     @Column(unique = true, nullable = false)
-    @Email(message = "Providencie um e-mail válido.")
     private String email;
 
     @Column(unique = true, nullable = false)
-    @Length(min = 11, max = 11, message = "Um CPF válido deve conter 11 caractéres")
     private String CPF;
 
     @Column(nullable = false)
-    @Length(min = 6, message = "A senha precisa ter no mínimo 6 caractéres")
     private String password;
 
     @Enumerated(EnumType.STRING)
