@@ -40,6 +40,7 @@ public class User {
     private String email;
 
     @Column(unique = true, nullable = false)
+    @Length(min = 11, max = 11, message = "Um CPF válido deve conter 11 caractéres")
     private String CPF;
 
     @Column(nullable = false)
