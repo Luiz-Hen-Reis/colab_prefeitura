@@ -2,6 +2,8 @@ package com.henr.colab_prefeitura.modules.occurrences.useCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -16,11 +18,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceRequestDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.ReverseGeocodeResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.entities.Occurrence;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Priority;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Status;
@@ -36,6 +44,9 @@ public class CreateOccurrenceUseCaseTest {
 
     @Mock
     private AuthenticatedUserProvider authenticatedUserProvider;
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @InjectMocks
     private CreateOccurrenceUseCase createOccurrenceUseCase;
@@ -77,6 +88,8 @@ public class CreateOccurrenceUseCaseTest {
             o.setId(UUID.randomUUID());
             return o;
         });
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(HttpEntity.class), eq(ReverseGeocodeResponseDTO.class)))
+            .thenReturn(new ResponseEntity<>(createResponse("São Paulo"), HttpStatus.OK));
 
         CreateOccurrenceResponseDTO response = createOccurrenceUseCase.createWithoutImage(dto);
 
@@ -147,5 +160,26 @@ public class CreateOccurrenceUseCaseTest {
         });
 
         assertEquals("Ocorrência não encontrada", exception.getMessage());
+    }
+
+    @Test
+    void should_throw_exception_when_coordinates_are_outside_sao_paulo() {
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(HttpEntity.class), eq(ReverseGeocodeResponseDTO.class)))
+            .thenReturn(new ResponseEntity<>(createResponse("Campinas"), HttpStatus.OK));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            createOccurrenceUseCase.createWithoutImage(dto);
+        });
+
+        assertEquals("A coordenada informada está fora da cidade de São Paulo.", exception.getMessage());
+    }
+
+
+    private ReverseGeocodeResponseDTO createResponse(String city) {
+        ReverseGeocodeResponseDTO response = new ReverseGeocodeResponseDTO();
+        ReverseGeocodeResponseDTO.Address address = new ReverseGeocodeResponseDTO.Address();
+        address.city = city;
+        response.address = address;
+        return response;
     }
 }
