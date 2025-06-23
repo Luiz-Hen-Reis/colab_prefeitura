@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceRequestDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.FetchUserOccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.useCases.CreateOccurrenceUseCase;
+import com.henr.colab_prefeitura.modules.occurrences.useCases.FetchUserOccurrencesUseCase;
 
 @RestController
 @RequestMapping("/occurrences")
@@ -19,6 +21,9 @@ public class OccurrenceController {
 
     @Autowired
     private CreateOccurrenceUseCase createOccurrenceUseCase;
+
+    @Autowired
+    private FetchUserOccurrencesUseCase fetchUserOccurrencesUseCase;
 
     @PostMapping
     public ResponseEntity<CreateOccurrenceResponseDTO> create(@RequestBody CreateOccurrenceRequestDTO dto) {
@@ -33,5 +38,11 @@ public class OccurrenceController {
     ) {
         createOccurrenceUseCase.saveImage(UUID.fromString(id), image);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<FetchUserOccurrencesResponseDTO> listUserOccurrences() {
+        var result = this.fetchUserOccurrencesUseCase.execute();
+        return ResponseEntity.ok().body(result);
     }
 }
