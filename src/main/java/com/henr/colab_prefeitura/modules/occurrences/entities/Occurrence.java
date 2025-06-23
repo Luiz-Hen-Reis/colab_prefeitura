@@ -61,7 +61,7 @@ public class Occurrence {
     @Column(nullable = false)
     private BigDecimal longitude;
 
-    @Column(nullable = false, name = "image_path")
+    @Column(nullable = true, name = "image_path")
     private String imagePath;
 
     @ManyToOne(optional = false)
