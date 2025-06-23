@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Priority;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Status;
 
-public record InnerFetchUserOccurrencesResponseDTO(
+public record InnerOccurrencesResponseDTO(
     UUID id,
     String title,
     String description,
