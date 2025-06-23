@@ -1,29 +1,22 @@
-package com.henr.colab_prefeitura.modules.occurrences.useCases;
+package com.henr.colab_prefeitura.modules.occurrences.useCases.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.henr.colab_prefeitura.modules.occurrences.dtos.OccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.InnerOccurrencesResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.OccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.repositories.OccurrenceRepository;
-import com.henr.colab_prefeitura.modules.users.entities.User;
-import com.henr.colab_prefeitura.providers.AuthenticatedUserProvider;
 
 @Service
-public class FetchUserOccurrencesUseCase {
+public class FetchAllOccurrencesUseCase {
     
     @Autowired
     private OccurrenceRepository occurrenceRepository;
 
-    @Autowired
-    private AuthenticatedUserProvider authenticatedUserProvider;
-
     public OccurrencesResponseDTO execute() {
-        User user = authenticatedUserProvider.getAuthenticatedUser();
+        var occurrences = this.occurrenceRepository.findAll();
 
-        var occurrences = this.occurrenceRepository.findAllByUserId(user.getId());
-
-        var occurrencesDto = occurrences.stream().map(occurrence -> 
+          var occurrencesDto = occurrences.stream().map(occurrence -> 
             new InnerOccurrencesResponseDTO(
                 occurrence.getId(),
                 occurrence.getTitle(),

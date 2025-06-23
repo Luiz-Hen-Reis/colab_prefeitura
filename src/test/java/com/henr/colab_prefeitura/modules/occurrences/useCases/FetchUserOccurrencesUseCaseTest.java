@@ -1,6 +1,6 @@
 package com.henr.colab_prefeitura.modules.occurrences.useCases;
 
-import com.henr.colab_prefeitura.modules.occurrences.dtos.FetchUserOccurrencesResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.OccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.entities.Occurrence;
 import com.henr.colab_prefeitura.modules.occurrences.repositories.OccurrenceRepository;
 import com.henr.colab_prefeitura.modules.users.entities.User;
@@ -59,7 +59,7 @@ public class FetchUserOccurrencesUseCaseTest {
         when(authenticatedUserProvider.getAuthenticatedUser()).thenReturn(mockUser);
         when(occurrenceRepository.findAllByUserId(mockUser.getId())).thenReturn(expectedOccurrences);
 
-        FetchUserOccurrencesResponseDTO response = fetchUserOccurrencesUseCase.execute();
+        OccurrencesResponseDTO response = fetchUserOccurrencesUseCase.execute();
 
         assertNotNull(response);
         assertEquals(2, response.occurrences().size());

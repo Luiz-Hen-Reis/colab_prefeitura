@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceRequestDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.CreateOccurrenceResponseDTO;
-import com.henr.colab_prefeitura.modules.occurrences.dtos.FetchUserOccurrencesResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.OccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.useCases.CreateOccurrenceUseCase;
 import com.henr.colab_prefeitura.modules.occurrences.useCases.FetchUserOccurrencesUseCase;
 
@@ -41,7 +41,7 @@ public class OccurrenceController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<FetchUserOccurrencesResponseDTO> listUserOccurrences() {
+    public ResponseEntity<OccurrencesResponseDTO> listUserOccurrences() {
         var result = this.fetchUserOccurrencesUseCase.execute();
         return ResponseEntity.ok().body(result);
     }
