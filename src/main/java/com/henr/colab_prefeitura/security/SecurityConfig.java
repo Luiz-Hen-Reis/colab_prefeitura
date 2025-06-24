@@ -16,6 +16,12 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityFilter securityFilter;
+
+    private static final String[] SWAGGER_ENDPOINTS = {
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html"
+    };
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -27,6 +33,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/auth/**").permitAll()
+             .requestMatchers(SWAGGER_ENDPOINTS).permitAll()
             .anyRequest().authenticated()
             ).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
 
