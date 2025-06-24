@@ -3,6 +3,7 @@ package com.henr.colab_prefeitura.modules.occurrences.useCases.admin;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.henr.colab_prefeitura.exceptions.ResourceNotFoundException;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.ChangeOccurrenceStatusResponseDTO;
@@ -10,7 +11,9 @@ import com.henr.colab_prefeitura.modules.occurrences.enums.Status;
 import com.henr.colab_prefeitura.modules.occurrences.mappers.OccurrenceMapper;
 import com.henr.colab_prefeitura.modules.occurrences.repositories.OccurrenceRepository;
 
+@Service
 public class ChangeOccurrenceStatusUseCase {
+    
     @Autowired
     private OccurrenceRepository occurrenceRepository;
     
