@@ -32,6 +32,7 @@ import com.henr.colab_prefeitura.modules.occurrences.dtos.ReverseGeocodeResponse
 import com.henr.colab_prefeitura.modules.occurrences.entities.Occurrence;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Priority;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Status;
+import com.henr.colab_prefeitura.modules.occurrences.events.publishers.OccurrenceEventPublisher;
 import com.henr.colab_prefeitura.modules.occurrences.repositories.OccurrenceRepository;
 import com.henr.colab_prefeitura.modules.users.entities.User;
 import com.henr.colab_prefeitura.providers.AuthenticatedUserProvider;
@@ -47,6 +48,9 @@ public class CreateOccurrenceUseCaseTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private OccurrenceEventPublisher eventPublisher;
 
     @InjectMocks
     private CreateOccurrenceUseCase createOccurrenceUseCase;
