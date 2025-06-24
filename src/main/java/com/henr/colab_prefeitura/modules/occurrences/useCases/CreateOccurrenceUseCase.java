@@ -19,6 +19,7 @@ import com.henr.colab_prefeitura.modules.occurrences.dtos.ReverseGeocodeResponse
 import com.henr.colab_prefeitura.modules.occurrences.entities.Occurrence;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Priority;
 import com.henr.colab_prefeitura.modules.occurrences.enums.Status;
+import com.henr.colab_prefeitura.modules.occurrences.events.publishers.OccurrenceEventPublisher;
 import com.henr.colab_prefeitura.modules.occurrences.repositories.OccurrenceRepository;
 import com.henr.colab_prefeitura.modules.users.entities.User;
 import com.henr.colab_prefeitura.providers.AuthenticatedUserProvider;
@@ -34,6 +35,9 @@ public class CreateOccurrenceUseCase {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private OccurrenceEventPublisher eventPublisher;
 
     public CreateOccurrenceResponseDTO createWithoutImage(CreateOccurrenceRequestDTO dto) {
         validateCoordinatesInSaoPaulo(dto.latitude(), dto.longitude());
@@ -52,19 +56,21 @@ public class CreateOccurrenceUseCase {
             .user(user)
             .build();
 
-        Occurrence saved = occurrenceRepository.save(occurrence);
+        Occurrence savedOccurrence = this.occurrenceRepository.save(occurrence);
+
+        this.eventPublisher.publishOccurrenceToClassify(savedOccurrence.getId());
 
         return new CreateOccurrenceResponseDTO(
-            saved.getTitle(),
-            saved.getDescription(),
-            saved.getType(),
-            saved.getAddress(),
-            saved.getLatitude(),
-            saved.getLongitude(),
+            savedOccurrence.getTitle(),
+            savedOccurrence.getDescription(),
+            savedOccurrence.getType(),
+            savedOccurrence.getAddress(),
+            savedOccurrence.getLatitude(),
+            savedOccurrence.getLongitude(),
             null,
-            saved.getPriority(),
-            saved.getStatus(),
-            saved.getUser().getId().toString()
+            savedOccurrence.getPriority(),
+            savedOccurrence.getStatus(),
+            savedOccurrence.getUser().getId().toString()
         );
     }
 
