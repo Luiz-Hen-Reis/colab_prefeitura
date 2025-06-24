@@ -53,7 +53,7 @@ public class FetchAllOccurrencesUseCaseTest {
 
         var expectedOccurrences = List.of(occurrence1, occurrence2);
 
-        when(occurrenceRepository.findAll()).thenReturn(expectedOccurrences);
+        when(occurrenceRepository.findAllByOrderByCreatedAtDesc()).thenReturn(expectedOccurrences);
 
          OccurrencesResponseDTO response = fetchAllOccurrencesUseCase.execute();
 

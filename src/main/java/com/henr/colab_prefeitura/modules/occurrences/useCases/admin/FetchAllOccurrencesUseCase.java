@@ -14,7 +14,7 @@ public class FetchAllOccurrencesUseCase {
     private OccurrenceRepository occurrenceRepository;
 
     public OccurrencesResponseDTO execute() {
-        var occurrences = this.occurrenceRepository.findAll();
+        var occurrences = this.occurrenceRepository.findAllByOrderByCreatedAtDesc();
 
           var occurrencesDto = occurrences.stream().map(occurrence -> 
             new InnerOccurrencesResponseDTO(

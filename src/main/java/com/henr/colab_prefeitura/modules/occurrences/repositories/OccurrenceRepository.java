@@ -9,4 +9,5 @@ import com.henr.colab_prefeitura.modules.occurrences.entities.Occurrence;
 
 public interface OccurrenceRepository extends JpaRepository<Occurrence, UUID> {
     List<Occurrence> findAllByUserId(UUID userId);   
+    List<Occurrence> findAllByOrderByCreatedAtDesc();
 }
