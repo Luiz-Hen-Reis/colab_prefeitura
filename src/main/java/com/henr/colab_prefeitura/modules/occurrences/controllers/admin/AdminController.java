@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.henr.colab_prefeitura.modules.occurrences.dtos.ChangeOccurrencePriorityRequestDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.ChangeOccurrencePriorityResponseDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.ChangeOccurrenceStatusRequestDTO;
+import com.henr.colab_prefeitura.modules.occurrences.dtos.ChangeOccurrenceStatusResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.dtos.OccurrencesResponseDTO;
 import com.henr.colab_prefeitura.modules.occurrences.useCases.admin.ChangeOccurrencePriorityUseCase;
+import com.henr.colab_prefeitura.modules.occurrences.useCases.admin.ChangeOccurrenceStatusUseCase;
 import com.henr.colab_prefeitura.modules.occurrences.useCases.admin.FetchAllOccurrencesUseCase;
 
 import jakarta.validation.Valid;
@@ -29,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private ChangeOccurrencePriorityUseCase changeOccurrencePriorityUseCase;
+
+    @Autowired
+    private ChangeOccurrenceStatusUseCase changeOccurrenceStatusUseCase;
     
     @GetMapping("/occurrences")
     @PreAuthorize("hasRole('ADMIN')")
@@ -44,6 +50,16 @@ public class AdminController {
         @Valid @RequestBody ChangeOccurrencePriorityRequestDTO request
      ) {
         var result = this.changeOccurrencePriorityUseCase.execute(UUID.fromString(occurrenceId), request.priority());
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PatchMapping("/occurrences/{occurrenceId}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ChangeOccurrenceStatusResponseDTO> updateStatus(
+        @PathVariable String occurrenceId,
+        @Valid @RequestBody ChangeOccurrenceStatusRequestDTO request
+     ) {
+        var result = this.changeOccurrenceStatusUseCase.execute(UUID.fromString(occurrenceId), request.status());
         return ResponseEntity.ok().body(result);
     }
 }
