@@ -1,6 +1,7 @@
 package com.henr.colab_prefeitura.security;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var subjectId = this.jwtUtil.validateToken(header);
 
             if (subjectId.isEmpty()) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                throw new AccessDeniedException("Token inválido ou expirado");
             }
 
             request.setAttribute("user_id", subjectId);
