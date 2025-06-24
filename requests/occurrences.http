@@ -6,8 +6,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc
 {
   "title": "Buraco na rua",
   "description": "Existe um buraco grande na Rua das Flores, perigoso para ciclistas.",
-  "type": "VIARIO", 
+  "type": "mato alto", 
   "address": "Rua das Flores, 123",
   "latitude": -23.550520,
   "longitude": -46.633308
 }
+
+### Listar todas as ocorrencias do usuário
+GET http://localhost:8080/occurrences/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwNzgyMjE2LCJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiMWM0ZWJkNzUtYTIyYy00Y2U1LWExZGEtZjAyNmVmZjgxZGNhIn0.5UDxPbiW5Ihq7pUieVNrRM0GZrkKsWRbXfAqmo5jeqg

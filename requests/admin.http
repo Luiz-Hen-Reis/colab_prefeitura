@@ -1,0 +1,24 @@
+### Listar todas as ocorrencias (ADMIN)
+GET http://localhost:8080/admin/occurrences
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwODAyMTA5LCJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6IjUwYmFmY2RjLTJkNTctNDcwYS1hOWU2LWY0YjhmODdiYzEzMiJ9.arBH3OfTaXJyZHAOFuI1_MF8ilJQIIN2vSeP9YoHp6E
+
+### Atualizar a prioridade de uma ocorrencia (ADMIN)
+PATCH http://localhost:8080/admin/occurrences/f2439971-1101-427b-8478-aed1389cb27e/priority
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwNzgyMjE2LCJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiMWM0ZWJkNzUtYTIyYy00Y2U1LWExZGEtZjAyNmVmZjgxZGNhIn0.5UDxPbiW5Ihq7pUieVNrRM0GZrkKsWRbXfAqmo5jeqgE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwODAyMTA5LCJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6IjUwYmFmY2RjLTJkNTctNDcwYS1hOWU2LWY0YjhmODdiYzEzMiJ9.arBH3OfTaXJyZHAOFuI1_MF8ilJQIIN2vSeP9YoHp6E
+
+{
+    "priority": "MEDIUM"
+}
+
+### Atualizar o status de uma ocorrencia (ADMIN)
+PATCH http://localhost:8080/admin/occurrences/f2439971-1101-427b-8478-aed1389cb27e/status
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwNzgyMjE2LCJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoiMWM0ZWJkNzUtYTIyYy00Y2U1LWExZGEtZjAyNmVmZjgxZGNhIn0.5UDxPbiW5Ihq7pUieVNrRM0GZrkKsWRbXfAqmo5jeqgE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGlfY3Vyc29zIiwiZXhwIjoxNzUwODAyMTA5LCJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6IjUwYmFmY2RjLTJkNTctNDcwYS1hOWU2LWY0YjhmODdiYzEzMiJ9.arBH3OfTaXJyZHAOFuI1_MF8ilJQIIN2vSeP9YoHp6E
+
+{
+    "status": "PENDING"
+}
