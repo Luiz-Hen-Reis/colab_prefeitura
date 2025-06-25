@@ -1,51 +1,60 @@
-# 🏙️ API de Ocorrências Urbanas – Colab Prefeitura
+# API de Ocorrências Urbanas (Colab Prefeitura) - v1.0.0
 
-**Versão:** 1.0.0  
-**Documentação OpenAPI:** [Swagger UI](http://localhost:8080/swagger-ui.html) | [Spec JSON](http://localhost:8080/v3/api-docs)
+![Badge](https://img.shields.io/badge/Java-Spring%20Boot%20%7C%20Spring%20Security-success)
+![Badge](https://img.shields.io/badge/OAS-3.1-blue)
+![Badge](https://img.shields.io/badge/PostgreSQL-Docker%20Compose-informational)
+![Badge](https://img.shields.io/badge/RabbitMQ-Message%20Broker-important)
 
-API REST desenvolvida com **Java Spring Boot** para o gerenciamento de ocorrências urbanas, permitindo que cidadãos reportem problemas como buracos nas ruas, falhas na iluminação pública, coleta de lixo e outros serviços municipais.
+API REST para gerenciamento de ocorrências urbanas, permitindo que cidadãos reportem problemas como buracos, iluminação pública, coleta de lixo e outros serviços urbanos.
 
----
+## 📌 Visão Geral
+
+- **Tecnologias**: Java Spring Boot, Spring Security, JWT, PostgreSQL, RabbitMQ
+- **Documentação**: [OpenAPI 3.1](http://localhost:8080/v3/api-docs) | [Swagger UI](http://localhost:8080/swagger-ui.html)
+- **Servidor**: `http://localhost:8080` (Ambiente de desenvolvimento)
+- **Testes Unitários**:  API testada integralmente com JUnit e Mockito
 
 ## 🚀 Funcionalidades
 
-- Registro e autenticação de usuários (com JWT)
-- Criação e consulta de ocorrências urbanas
-- Upload de imagens vinculadas às ocorrências
-- Listagem das ocorrências de um usuário autenticado
-- Endpoints administrativos para alterar **status** e **prioridade**
-- Sistema de classificação de prioridade assíncrono via **RabbitMQ**
-- Controles de acesso baseados em **roles** (`USER` e `ADMIN`)
-- Testes unitários e ambiente isolado com Docker Compose
+### 👨‍💻 Administração (ROLE_ADMIN)
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| PATCH  | `/admin/occurrences/{occurrenceId}/status` | Atualizar status de uma ocorrência |
+| PATCH  | `/admin/occurrences/{occurrenceId}/priority` | Atualizar prioridade de uma ocorrência |
+| GET    | `/admin/occurrences` | Listar todas as ocorrências |
 
----
+### 🏙️ Ocorrências Urbanas (ROLE_USER)
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST   | `/occurrences` | Criar nova ocorrência (sem imagem) |
+| POST   | `/occurrences/{id}/image` | Upload de imagem para ocorrência |
+| GET    | `/occurrences/me` | Listar ocorrências do usuário autenticado |
 
-## 🛠️ Tecnologias Utilizadas
+### 🔐 Autenticação
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST   | `/auth/sessions` | Login (JWT) |
+| POST   | `/auth/register` | Registrar novo usuário |
 
-- Java 17
-- Spring Boot
-  - Spring Web
-  - Spring Security
-  - Spring Data JPA
-  - Spring Validation
-- PostgreSQL (via Docker)
-- RabbitMQ (mensageria assíncrona via Docker)
-- JWT para autenticação
-- JUnit + Mockito para testes
-- OpenAPI 3.1 (Swagger)
+## 🔄 Fluxo de Prioridades
 
----
+RabbitMQ é utilizado para classificar automaticamente a prioridade das ocorrências baseado em heurísticas simples.
 
-## 🐳 Docker
+## 🛠️ Configuração
 
-### Serviços disponíveis via Docker Compose:
+### Pré-requisitos
+- Docker e Docker Compose
+- Java 17+
+- Maven
 
-- PostgreSQL (porta `5432`)
-- RabbitMQ
-  - Porta: `5672`
-  - Painel de administração: [http://localhost:15672](http://localhost:15672)
-  - Login: `guest` / `guest`
+## ▶️ Iniciar Aplicação
 
-```bash
-docker-compose up -d
-```
+1. **Subir containers**:
+   ```bash
+   docker-compose up -d
+
+2. Execute o seguinte comando para iniciar a aplicação Spring Boot:
+
+  ```bash
+  mvn spring-boot:run
+
