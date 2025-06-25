@@ -12,7 +12,7 @@ API REST para gerenciamento de ocorrências urbanas, permitindo que cidadãos re
 - **Tecnologias**: Java Spring Boot, Spring Security, JWT, PostgreSQL, RabbitMQ
 - **Documentação**: [OpenAPI 3.1](http://localhost:8080/v3/api-docs) | [Swagger UI](http://localhost:8080/swagger-ui.html)
 - **Servidor**: `http://localhost:8080` (Ambiente de desenvolvimento)
-- **Testes Unitários**:  API testada integralmente com JUnit e Mockito
+- **Testes Unitários**:  API testada com testes unitários usando JUnit e Mockito
 
 ## 🚀 Funcionalidades
 
